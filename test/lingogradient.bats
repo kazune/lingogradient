@@ -28,6 +28,12 @@ setup() {
   [ "$output" = $'One.\nTwo.\nThree.\nFour.' ]
 }
 
+@test "uses TranslateGemma 4B by default" {
+  EXPECTED_MODEL="translategemma:4b" run "$LINGOGRADIENT" <<<"テスト。"
+
+  [ "$status" -eq 0 ]
+}
+
 @test "uses the model from the environment" {
   LINGOGRADIENT_MODEL="custom-model:latest" EXPECTED_MODEL="custom-model:latest" \
     run "$LINGOGRADIENT" <<<"テスト。"

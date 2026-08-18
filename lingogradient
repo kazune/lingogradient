@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-MODEL=${LINGOGRADIENT_MODEL:-qwen3.5:9b}
+MODEL=${LINGOGRADIENT_MODEL:-translategemma:4b}
 OLLAMA_URL="http://localhost:11434"
 DEFAULT_PERCENTAGE=40
 SCRIPT_DIR=$(

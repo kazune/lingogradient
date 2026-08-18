@@ -9,7 +9,7 @@ Ollamaを使って日本語の文章を英訳し、文単位で日本語と英�
 - macOS
 - Bash 3.2以降
 - Ollama
-- `qwen3.5:9b`
+- `translategemma:4b`
 - curl
 - jq
 
@@ -17,7 +17,7 @@ Ollamaを起動し、モデルが未導入なら取得してください。
 
 ```console
 ollama serve
-ollama pull qwen3.5:9b
+ollama pull translategemma:4b
 ```
 
 ## 使い方
@@ -40,6 +40,8 @@ stdinは空入力も含めてそのままOllamaへ渡します。モデルが空
 不正なレスポンスや通信エラーが発生しても、以前の正常なレスポンスは保持されます。保存内容には原文と翻訳が含まれるため、`.lingogradient/`はGitの対象外です。
 
 モデルを変更する場合は、`LINGOGRADIENT_MODEL`環境変数を指定してください。
+
+TranslateGemma以外の汎用モデルでも、指定した構造化JSON形式に従えるモデルであれば動作するはずです。
 
 ```console
 LINGOGRADIENT_MODEL=gemma3:4b ./lingogradient < input.txt
