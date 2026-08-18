@@ -3,11 +3,11 @@
 check: lint test
 
 test:
-	bats test/mz.bats
+	bats test/lingogradient.bats
 
 lint:
-	shellcheck -s bash mz test/fixtures/bin/curl
-	shfmt -d -i 2 -ci mz test/fixtures/bin/curl test/mz.bats
+	shellcheck -s bash lingogradient test/fixtures/bin/curl
+	shfmt -d -i 2 -ci lingogradient test/fixtures/bin/curl test/lingogradient.bats
 
 fmt:
-	shfmt -w -i 2 -ci mz test/fixtures/bin/curl test/mz.bats
+	shfmt -w -i 2 -ci lingogradient test/fixtures/bin/curl test/lingogradient.bats

@@ -19,12 +19,12 @@ CLI仕様
 
 基本:
 
-mz < input.txt
+lingogradient < input.txt
 
 英語化する割合を指定可能にする:
 
-mz 30   # 30%
-mz 70   # 70%
+lingogradient 30   # 30%
+lingogradient 70   # 70%
 
 未指定時は40%程度をデフォルトにする。
 
@@ -56,7 +56,7 @@ The train was unusually crowded today.
 * フォールバックを作らない
 * 不正な割合（0〜100外）はエラー
 * コードはシンプルに保つ
-* まずは単一ファイル mz として実装する
+* まずは単一ファイル lingogradient として実装する
 * キャッシュ、履歴、設定ファイル、並列処理などは今回は不要
 
 Ollamaのモデル名はスクリプト中の冒頭の変数で簡単に変更できるようにする。

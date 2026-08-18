@@ -7,11 +7,11 @@ OLLAMA_URL="http://localhost:11434"
 DEFAULT_PERCENTAGE=40
 
 usage() {
-  echo "Usage: mz [0-100]" >&2
+  echo "Usage: lingogradient [0-100]" >&2
 }
 
 die() {
-  echo "mz: $*" >&2
+  echo "lingogradient: $*" >&2
   exit 1
 }
 

@@ -1,4 +1,4 @@
-# mz
+# LingoGradient
 
 Ollamaを使って日本語の文章を英訳し、文単位で日本語と英語を混ぜて出力する個人用CLIです。
 
@@ -23,16 +23,16 @@ ollama pull qwen3.5:9b
 ## 使い方
 
 ```console
-./mz < input.txt
-./mz 30 < input.txt
-./mz 70 < input.txt
+./lingogradient < input.txt
+./lingogradient 30 < input.txt
+./lingogradient 70 < input.txt
 ```
 
 引数は英語で出力する割合で、`0`から`100`までの整数です。未指定時は`40`です。
 
 全文がN文の場合、`N × 割合 ÷ 100`を四捨五入した数の文をランダムに選び、英語で出力します。残りは日本語原文を出力します。出力順は入力と同じです。
 
-モデルを変更する場合は、[mz](mz)の冒頭にある`MODEL`を書き換えてください。
+モデルを変更する場合は、[lingogradient](lingogradient)の冒頭にある`MODEL`を書き換えてください。
 
 ## 制約
 
