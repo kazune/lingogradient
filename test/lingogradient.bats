@@ -60,11 +60,20 @@ setup() {
   [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
 }
 
-@test "rejects empty input" {
-  run "$LINGOGRADIENT" <<<"   "
+@test "passes empty input through and accepts an empty result" {
+  CURL_MODE=empty EXPECTED_PROMPT="" run "$LINGOGRADIENT" </dev/null
 
-  [ "$status" -eq 1 ]
-  [ "$output" = "lingogradient: input is empty" ]
+  [ "$status" -eq 0 ]
+  [ -z "$output" ]
+}
+
+@test "passes stdin to Ollama unchanged" {
+  input=$'一行目。\n\n二行目。\n'
+  export EXPECTED_PROMPT="$input"
+
+  run bash -c 'printf "%s" "$1" | "$2"' _ "$input" "$LINGOGRADIENT"
+
+  [ "$status" -eq 0 ]
 }
 
 @test "fails without partial output when Ollama returns invalid JSON" {

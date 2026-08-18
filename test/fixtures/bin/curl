@@ -8,6 +8,12 @@ if [[ -n ${EXPECTED_MODEL:-} ]] &&
   exit 1
 fi
 
+if [[ ${EXPECTED_PROMPT+x} == x ]] &&
+  ! jq -e --arg expected "$EXPECTED_PROMPT" '.prompt == $expected' <<<"$request" >/dev/null; then
+  echo "unexpected prompt" >&2
+  exit 1
+fi
+
 case ${CURL_MODE:-success} in
   success)
     jq -cn --arg response '{"sentences":[{"ja":"一。","en":"One."},{"ja":"二。","en":"Two."},{"ja":"三。","en":"Three."},{"ja":"四。","en":"Four."}]}' \
@@ -15,6 +21,9 @@ case ${CURL_MODE:-success} in
     ;;
   invalid)
     jq -cn --arg response 'not json' '{response: $response}'
+    ;;
+  empty)
+    jq -cn --arg response '{"sentences":[]}' '{response: $response}'
     ;;
   failure)
     echo "curl: (22) The requested URL returned error: 500" >&2

@@ -51,6 +51,8 @@ The train was unusually crowded today.
 * Ollama APIは curl
 * JSON生成・解析はすべて jq に任せる
 * BashでJSON文字列を手動組み立てしない
+* stdinはjqに直接読ませ、生成したリクエストをcurlへパイプする
+* 空入力もOllamaへ渡し、空の文配列は正常な応答として扱う
 * 日本語の文分割もBashでは行わずLLMに任せる
 * Ollama停止時やHTTPエラー時はstderrへ簡潔なエラーを出して終了
 * フォールバックを作らない
