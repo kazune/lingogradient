@@ -34,11 +34,23 @@ setup() {
   [ "$output" = "lingogradient: percentage must be an integer from 0 to 100" ]
 }
 
+@test "shows help with a short description" {
+  run "$LINGOGRADIENT" --help
+
+  [ "$status" -eq 0 ]
+  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
+
+  run "$LINGOGRADIENT" -h
+
+  [ "$status" -eq 0 ]
+  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
+}
+
 @test "rejects extra arguments" {
   run "$LINGOGRADIENT" 20 30 <<<"テスト。"
 
   [ "$status" -eq 2 ]
-  [ "$output" = "Usage: lingogradient [0-100]" ]
+  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
 }
 
 @test "rejects empty input" {

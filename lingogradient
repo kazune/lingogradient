@@ -7,7 +7,11 @@ OLLAMA_URL="http://localhost:11434"
 DEFAULT_PERCENTAGE=40
 
 usage() {
-  echo "Usage: lingogradient [0-100]" >&2
+  cat <<'EOF'
+Translate Japanese text and mix source and English sentences.
+
+Usage: lingogradient [0-100]
+EOF
 }
 
 die() {
@@ -16,8 +20,13 @@ die() {
 }
 
 if (($# > 1)); then
-  usage
+  usage >&2
   exit 2
+fi
+
+if (($# == 1)) && [[ $1 == "-h" || $1 == "--help" ]]; then
+  usage
+  exit 0
 fi
 
 percentage=${1:-$DEFAULT_PERCENTAGE}
