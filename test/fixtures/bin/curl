@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+case ${CURL_MODE:-success} in
+  success)
+    jq -cn --arg response '{"sentences":[{"ja":"一。","en":"One."},{"ja":"二。","en":"Two."},{"ja":"三。","en":"Three."},{"ja":"四。","en":"Four."}]}' \
+      '{response: $response}'
+    ;;
+  invalid)
+    jq -cn --arg response 'not json' '{response: $response}'
+    ;;
+  failure)
+    exit 22
+    ;;
+esac
