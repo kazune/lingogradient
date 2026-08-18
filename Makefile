@@ -10,7 +10,7 @@ test:
 	bats test/lingogradient.bats
 
 lint:
-	shellcheck -s bash $(SH_FILES)
+	shellcheck $(SH_FILES)
 
 fmt-check:
 	$(SHFMT) -d $(SHFMT_FLAGS) $(SH_FILES)
