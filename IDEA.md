@@ -59,6 +59,6 @@ The train was unusually crowded today.
 * まずは単一ファイル lingogradient として実装する
 * キャッシュ、履歴、設定ファイル、並列処理などは今回は不要
 
-Ollamaのモデル名はスクリプト中の冒頭の変数で簡単に変更できるようにする。
+Ollamaのモデル名は`LINGOGRADIENT_MODEL`環境変数で変更できるようにする。未指定時は`qwen3.5:9b`を使う。
 
 まず動く最小実装を作り、その後必要なら改善点も簡潔に提示してほしい。

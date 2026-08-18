@@ -32,7 +32,11 @@ ollama pull qwen3.5:9b
 
 全文がN文の場合、`N × 割合 ÷ 100`を四捨五入した数の文をランダムに選び、英語で出力します。残りは日本語原文を出力します。出力順は入力と同じです。
 
-モデルを変更する場合は、[lingogradient](lingogradient)の冒頭にある`MODEL`を書き換えてください。
+モデルを変更する場合は、`LINGOGRADIENT_MODEL`環境変数を指定してください。
+
+```console
+LINGOGRADIENT_MODEL=gemma3:4b ./lingogradient < input.txt
+```
 
 ## 制約
 

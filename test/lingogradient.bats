@@ -27,6 +27,13 @@ setup() {
   [ "$output" = $'One.\nTwo.\nThree.\nFour.' ]
 }
 
+@test "uses the model from the environment" {
+  LINGOGRADIENT_MODEL="custom-model:latest" EXPECTED_MODEL="custom-model:latest" \
+    run "$LINGOGRADIENT" <<<"テスト。"
+
+  [ "$status" -eq 0 ]
+}
+
 @test "rejects an invalid percentage" {
   run "$LINGOGRADIENT" 101 <<<"テスト。"
 
