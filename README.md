@@ -2,6 +2,8 @@
 
 Ollamaを使って日本語の文章を英訳し、文単位で日本語と英語を混ぜて出力する個人用CLIです。
 
+[Mazelingo](https://mazelingo-web.pages.dev/)の文章中に日本語と英語を混ぜる体験に着想を得て、ローカルLLMで使えるシンプルなCLIとして作りました。
+
 ## 必要なもの
 
 - macOS
