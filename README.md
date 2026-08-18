@@ -60,5 +60,6 @@ LINGOGRADIENT_MODEL=gemma3:4b ./lingogradient < input.txt
 
 ```console
 make check
+make fmt-check
 make fmt
 ```
