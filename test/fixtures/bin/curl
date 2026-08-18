@@ -9,6 +9,7 @@ case ${CURL_MODE:-success} in
     jq -cn --arg response 'not json' '{response: $response}'
     ;;
   failure)
+    echo "curl: (22) The requested URL returned error: 500" >&2
     exit 22
     ;;
 esac

@@ -59,5 +59,5 @@ setup() {
   CURL_MODE=failure run "$LINGOGRADIENT" <<<"テスト。"
 
   [ "$status" -eq 1 ]
-  [ "$output" = "lingogradient: Ollama request failed" ]
+  [ "$output" = $'curl: (22) The requested URL returned error: 500\nlingogradient: Ollama request failed' ]
 }

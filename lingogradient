@@ -76,7 +76,7 @@ if ! api_response=$(curl --fail --silent --show-error \
   --connect-timeout 5 \
   -H 'Content-Type: application/json' \
   --data-binary @- \
-  "$OLLAMA_URL/api/generate" <<<"$request" 2>/dev/null); then
+  "$OLLAMA_URL/api/generate" <<<"$request"); then
   die "Ollama request failed"
 fi
 
