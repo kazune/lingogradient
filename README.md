@@ -26,6 +26,7 @@ ollama pull qwen3.5:9b
 ./lingogradient < input.txt
 ./lingogradient 30 < input.txt
 ./lingogradient 70 < input.txt
+./lingogradient --remix 70
 ```
 
 引数は英語で出力する割合で、`0`から`100`までの整数です。未指定時は`40`です。
@@ -33,6 +34,10 @@ ollama pull qwen3.5:9b
 全文がN文の場合、`N × 割合 ÷ 100`を四捨五入した数の文をランダムに選び、英語で出力します。残りは日本語原文を出力します。出力順は入力と同じです。
 
 stdinは空入力も含めてそのままOllamaへ渡します。モデルが空の文配列を返した場合は、何も出力せず正常終了します。
+
+正常なOllamaレスポンスは実行ファイル横の`.lingogradient/last-response.json`へそのまま保存されます。`--remix`を指定するとOllamaへ再度問い合わせず、保存済みの翻訳から文を選び直します。割合を省略した場合は`40`です。
+
+不正なレスポンスや通信エラーが発生しても、以前の正常なレスポンスは保持されます。保存内容には原文と翻訳が含まれるため、`.lingogradient/`はGitの対象外です。
 
 モデルを変更する場合は、`LINGOGRADIENT_MODEL`環境変数を指定してください。
 

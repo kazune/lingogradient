@@ -25,6 +25,7 @@ lingogradient < input.txt
 
 lingogradient 30   # 30%
 lingogradient 70   # 70%
+lingogradient --remix 70   # 保存済みの翻訳を70%で再混合
 
 未指定時は40%程度をデフォルトにする。
 
@@ -59,7 +60,9 @@ The train was unusually crowded today.
 * 不正な割合（0〜100外）はエラー
 * コードはシンプルに保つ
 * まずは単一ファイル lingogradient として実装する
-* キャッシュ、履歴、設定ファイル、並列処理などは今回は不要
+* 検証済みの直近Ollamaレスポンスだけを`.lingogradient/last-response.json`へ保存する
+* `--remix`では保存済みレスポンスを使い、Ollamaへ再問い合わせしない
+* 履歴、設定ファイル、並列処理などは今回は不要
 
 Ollamaのモデル名は`LINGOGRADIENT_MODEL`環境変数で変更できるようにする。未指定時は`qwen3.5:9b`を使う。
 

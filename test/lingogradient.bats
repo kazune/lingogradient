@@ -2,6 +2,7 @@
 
 setup() {
   export PATH="$BATS_TEST_DIRNAME/fixtures/bin:$PATH"
+  export LINGOGRADIENT_STATE_DIR="$BATS_TEST_TMPDIR/state"
   LINGOGRADIENT="$BATS_TEST_DIRNAME/../lingogradient"
 }
 
@@ -45,19 +46,68 @@ setup() {
   run "$LINGOGRADIENT" --help
 
   [ "$status" -eq 0 ]
-  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
+  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]\n       lingogradient --remix [0-100]' ]
 
   run "$LINGOGRADIENT" -h
 
   [ "$status" -eq 0 ]
-  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
+  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]\n       lingogradient --remix [0-100]' ]
 }
 
 @test "rejects extra arguments" {
   run "$LINGOGRADIENT" 20 30 <<<"テスト。"
 
   [ "$status" -eq 2 ]
-  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]' ]
+  [ "$output" = $'Translate Japanese text and mix source and English sentences.\n\nUsage: lingogradient [0-100]\n       lingogradient --remix [0-100]' ]
+}
+
+@test "saves the raw Ollama response" {
+  run "$LINGOGRADIENT" 0 <<<"テスト。"
+
+  [ "$status" -eq 0 ]
+  [ -f "$LINGOGRADIENT_STATE_DIR/last-response.json" ]
+  run jq -e '.response | fromjson | .sentences | length == 4' \
+    "$LINGOGRADIENT_STATE_DIR/last-response.json"
+  [ "$status" -eq 0 ]
+}
+
+@test "remixes the saved response without calling Ollama" {
+  run "$LINGOGRADIENT" 0 <<<"テスト。"
+  [ "$status" -eq 0 ]
+
+  CURL_MODE=failure run "$LINGOGRADIENT" --remix 100
+
+  [ "$status" -eq 0 ]
+  [ "$output" = $'One.\nTwo.\nThree.\nFour.' ]
+}
+
+@test "reports a missing saved response" {
+  run "$LINGOGRADIENT" --remix
+
+  [ "$status" -eq 1 ]
+  [ "$output" = "lingogradient: no saved response" ]
+}
+
+@test "reports an invalid saved response" {
+  mkdir -p "$LINGOGRADIENT_STATE_DIR"
+  printf '%s\n' '{"response":"not json"}' >"$LINGOGRADIENT_STATE_DIR/last-response.json"
+
+  run "$LINGOGRADIENT" --remix
+
+  [ "$status" -eq 1 ]
+  [ "$output" = "lingogradient: saved response is invalid" ]
+}
+
+@test "preserves the last valid response after an invalid response" {
+  run "$LINGOGRADIENT" 0 <<<"テスト。"
+  [ "$status" -eq 0 ]
+
+  CURL_MODE=invalid run "$LINGOGRADIENT" 0 <<<"テスト。"
+  [ "$status" -eq 1 ]
+
+  run "$LINGOGRADIENT" --remix 100
+  [ "$status" -eq 0 ]
+  [ "$output" = $'One.\nTwo.\nThree.\nFour.' ]
 }
 
 @test "passes empty input through and accepts an empty result" {

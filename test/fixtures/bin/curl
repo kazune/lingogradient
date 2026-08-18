@@ -2,6 +2,20 @@
 
 request=$(cat)
 
+output_file=
+while (($# > 0)); do
+  if [[ $1 == "--output" ]]; then
+    output_file=$2
+    shift 2
+  else
+    shift
+  fi
+done
+
+if [[ -n $output_file ]]; then
+  exec >"$output_file"
+fi
+
 if [[ -n ${EXPECTED_MODEL:-} ]] &&
   ! jq -e --arg expected "$EXPECTED_MODEL" '.model == $expected' <<<"$request" >/dev/null; then
   echo "unexpected model" >&2
